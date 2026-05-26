@@ -1,0 +1,5 @@
+﻿2026-05-23T14:24:42.7901561Z ##[debug]Evaluating condition for step: 'Fill in the new image ID in the Amazon ECS task definition'
+2026-05-23T14:24:42.7902867Z ##[debug]Evaluating: success()
+2026-05-23T14:24:42.7903187Z ##[debug]Evaluating success:
+2026-05-23T14:24:42.7903516Z ##[debug]=> false
+2026-05-23T14:24:42.7903829Z ##[debug]Result: false

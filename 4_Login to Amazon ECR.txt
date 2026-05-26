@@ -1,0 +1,5 @@
+﻿2026-05-23T14:24:42.7872866Z ##[debug]Evaluating condition for step: 'Login to Amazon ECR'
+2026-05-23T14:24:42.7875012Z ##[debug]Evaluating: success()
+2026-05-23T14:24:42.7875356Z ##[debug]Evaluating success:
+2026-05-23T14:24:42.7875769Z ##[debug]=> false
+2026-05-23T14:24:42.7876103Z ##[debug]Result: false

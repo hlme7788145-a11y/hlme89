@@ -1,0 +1,5 @@
+﻿2026-05-23T14:24:42.7908851Z ##[debug]Evaluating condition for step: 'Deploy Amazon ECS task definition'
+2026-05-23T14:24:42.7910123Z ##[debug]Evaluating: success()
+2026-05-23T14:24:42.7910438Z ##[debug]Evaluating success:
+2026-05-23T14:24:42.7910763Z ##[debug]=> false
+2026-05-23T14:24:42.7911076Z ##[debug]Result: false

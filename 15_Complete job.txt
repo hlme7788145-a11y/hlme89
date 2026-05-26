@@ -1,0 +1,14 @@
+﻿2026-05-23T14:24:43.0930505Z ##[debug]Starting: Complete job
+2026-05-23T14:24:43.0932906Z Uploading runner diagnostic logs
+2026-05-23T14:24:43.0945456Z ##[debug]Starting diagnostic file upload.
+2026-05-23T14:24:43.0945810Z ##[debug]Setting up diagnostic log folders.
+2026-05-23T14:24:43.0947896Z ##[debug]Creating diagnostic log files folder.
+2026-05-23T14:24:43.0955913Z ##[debug]Copying 1 worker diagnostic logs.
+2026-05-23T14:24:43.0964368Z ##[debug]Copying 1 runner diagnostic logs.
+2026-05-23T14:24:43.0965812Z ##[debug]Zipping diagnostic files.
+2026-05-23T14:24:43.1038693Z ##[debug]Uploading diagnostic metadata file.
+2026-05-23T14:24:43.1070144Z ##[debug]Diagnostic file upload complete.
+2026-05-23T14:24:43.1070692Z Completed runner diagnostic log upload
+2026-05-23T14:24:43.1070966Z Cleaning up orphan processes
+2026-05-23T14:24:43.1351887Z ##[warning]Node.js 20 actions are deprecated. The following actions are running on Node.js 20 and may not work as expected: actions/checkout@v4, aws-actions/configure-aws-credentials@v1. Actions will be forced to run with Node.js 24 by default starting June 2nd, 2026. Node.js 20 will be removed from the runner on September 16th, 2026. Please check if updated versions of these actions are available that support Node.js 24. To opt into Node.js 24 now, set the FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true environment variable on the runner or in your workflow file. Once Node.js 24 becomes the default, you can temporarily opt out by setting ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+2026-05-23T14:24:43.1355535Z ##[debug]Finishing: Complete job

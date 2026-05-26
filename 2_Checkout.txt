@@ -1,0 +1,191 @@
+﻿2026-05-23T14:24:41.7148097Z ##[debug]Evaluating condition for step: 'Checkout'
+2026-05-23T14:24:41.7184098Z ##[debug]Evaluating: success()
+2026-05-23T14:24:41.7189180Z ##[debug]Evaluating success:
+2026-05-23T14:24:41.7203080Z ##[debug]=> true
+2026-05-23T14:24:41.7208940Z ##[debug]Result: true
+2026-05-23T14:24:41.7234729Z ##[debug]Starting: Checkout
+2026-05-23T14:24:41.7297389Z ##[debug]Register post job cleanup for action: actions/checkout@v4
+2026-05-23T14:24:41.7366874Z ##[debug]Loading inputs
+2026-05-23T14:24:41.7378755Z ##[debug]Evaluating: github.repository
+2026-05-23T14:24:41.7379533Z ##[debug]Evaluating Index:
+2026-05-23T14:24:41.7381296Z ##[debug]..Evaluating github:
+2026-05-23T14:24:41.7382129Z ##[debug]..=> Object
+2026-05-23T14:24:41.7387295Z ##[debug]..Evaluating String:
+2026-05-23T14:24:41.7388120Z ##[debug]..=> 'repository'
+2026-05-23T14:24:41.7392023Z ##[debug]=> 'hlme7788145-a11y/hlme89'
+2026-05-23T14:24:41.7393235Z ##[debug]Result: 'hlme7788145-a11y/hlme89'
+2026-05-23T14:24:41.7396279Z ##[debug]Evaluating: github.token
+2026-05-23T14:24:41.7396623Z ##[debug]Evaluating Index:
+2026-05-23T14:24:41.7396878Z ##[debug]..Evaluating github:
+2026-05-23T14:24:41.7397138Z ##[debug]..=> Object
+2026-05-23T14:24:41.7397366Z ##[debug]..Evaluating String:
+2026-05-23T14:24:41.7397959Z ##[debug]..=> 'token'
+2026-05-23T14:24:41.7398674Z ##[debug]=> '***'
+2026-05-23T14:24:41.7399018Z ##[debug]Result: '***'
+2026-05-23T14:24:41.7410821Z ##[debug]Loading env
+2026-05-23T14:24:41.7471045Z ##[group]Run actions/checkout@v4
+2026-05-23T14:24:41.7471484Z with:
+2026-05-23T14:24:41.7471705Z   repository: hlme7788145-a11y/hlme89
+2026-05-23T14:24:41.7472166Z   token: ***
+2026-05-23T14:24:41.7472359Z   ssh-strict: true
+2026-05-23T14:24:41.7472555Z   ssh-user: git
+2026-05-23T14:24:41.7472755Z   persist-credentials: true
+2026-05-23T14:24:41.7473000Z   clean: true
+2026-05-23T14:24:41.7473235Z   sparse-checkout-cone-mode: true
+2026-05-23T14:24:41.7473496Z   fetch-depth: 1
+2026-05-23T14:24:41.7473702Z   fetch-tags: false
+2026-05-23T14:24:41.7473905Z   show-progress: true
+2026-05-23T14:24:41.7474123Z   lfs: false
+2026-05-23T14:24:41.7474298Z   submodules: false
+2026-05-23T14:24:41.7474505Z   set-safe-directory: true
+2026-05-23T14:24:41.7474867Z env:
+2026-05-23T14:24:41.7475057Z   AWS_REGION: MY_AWS_REGION
+2026-05-23T14:24:41.7475289Z   ECR_REPOSITORY: MY_ECR_REPOSITORY
+2026-05-23T14:24:41.7475549Z   ECS_SERVICE: MY_ECS_SERVICE
+2026-05-23T14:24:41.7475774Z   ECS_CLUSTER: MY_ECS_CLUSTER
+2026-05-23T14:24:41.7476019Z   ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION
+2026-05-23T14:24:41.7476367Z   CONTAINER_NAME: MY_CONTAINER_NAME
+2026-05-23T14:24:41.7476615Z ##[endgroup]
+2026-05-23T14:24:41.8549921Z ##[debug]GITHUB_WORKSPACE = '/home/runner/work/hlme89/hlme89'
+2026-05-23T14:24:41.8551568Z ##[debug]qualified repository = 'hlme7788145-a11y/hlme89'
+2026-05-23T14:24:41.8552372Z ##[debug]ref = 'refs/heads/main'
+2026-05-23T14:24:41.8553168Z ##[debug]commit = 'dea3b1759694734d2050d76b8ebfbd7c410992e4'
+2026-05-23T14:24:41.8553927Z ##[debug]clean = true
+2026-05-23T14:24:41.8554850Z ##[debug]filter = undefined
+2026-05-23T14:24:41.8555737Z ##[debug]fetch depth = 1
+2026-05-23T14:24:41.8556702Z ##[debug]fetch tags = false
+2026-05-23T14:24:41.8557507Z ##[debug]show progress = true
+2026-05-23T14:24:41.8559027Z ##[debug]lfs = false
+2026-05-23T14:24:41.8559835Z ##[debug]submodules = false
+2026-05-23T14:24:41.8560795Z ##[debug]recursive submodules = false
+2026-05-23T14:24:41.8561610Z ##[debug]GitHub Host URL = 
+2026-05-23T14:24:41.8563398Z ::add-matcher::/home/runner/work/_actions/actions/checkout/v4/dist/problem-matcher.json
+2026-05-23T14:24:41.8680459Z ##[debug]Added matchers: 'checkout-git'. Problem matchers scan action output for known warning or error strings and report these inline.
+2026-05-23T14:24:41.8686800Z Syncing repository: hlme7788145-a11y/hlme89
+2026-05-23T14:24:41.8688420Z ::group::Getting Git version info
+2026-05-23T14:24:41.8690196Z ##[group]Getting Git version info
+2026-05-23T14:24:41.8690899Z Working directory is '/home/runner/work/hlme89/hlme89'
+2026-05-23T14:24:41.8691929Z ##[debug]Getting git version
+2026-05-23T14:24:41.8692580Z [command]/usr/bin/git version
+2026-05-23T14:24:41.8739426Z git version 2.54.0
+2026-05-23T14:24:41.8762394Z ##[debug]0
+2026-05-23T14:24:41.8763713Z ##[debug]git version 2.54.0
+2026-05-23T14:24:41.8764337Z ##[debug]
+2026-05-23T14:24:41.8765896Z ##[debug]Set git useragent to: git/2.54.0 (github-actions-checkout)
+2026-05-23T14:24:41.8767977Z ::endgroup::
+2026-05-23T14:24:41.8768662Z ##[endgroup]
+2026-05-23T14:24:41.8774306Z ::add-mask::***
+2026-05-23T14:24:41.8783054Z Temporarily overriding HOME='/home/runner/work/_temp/9347392a-7558-49af-90a8-f98489c0f6cc' before making global git config changes
+2026-05-23T14:24:41.8789377Z Adding repository directory to the temporary git global config as a safe directory
+2026-05-23T14:24:41.8804110Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/hlme89/hlme89
+2026-05-23T14:24:41.8842521Z ##[debug]0
+2026-05-23T14:24:41.8843605Z ##[debug]
+2026-05-23T14:24:41.8849122Z Deleting the contents of '/home/runner/work/hlme89/hlme89'
+2026-05-23T14:24:41.8853906Z ::group::Initializing the repository
+2026-05-23T14:24:41.8854499Z ##[group]Initializing the repository
+2026-05-23T14:24:41.8859411Z [command]/usr/bin/git init /home/runner/work/hlme89/hlme89
+2026-05-23T14:24:41.8931540Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-05-23T14:24:41.8932928Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-05-23T14:24:41.8934827Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-05-23T14:24:41.8935531Z hint: call:
+2026-05-23T14:24:41.8936025Z hint:
+2026-05-23T14:24:41.8936559Z hint: 	git config --global init.defaultBranch <name>
+2026-05-23T14:24:41.8937243Z hint:
+2026-05-23T14:24:41.8938164Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-05-23T14:24:41.8939105Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-05-23T14:24:41.8939963Z hint:
+2026-05-23T14:24:41.8940314Z hint: 	git branch -m <name>
+2026-05-23T14:24:41.8940913Z hint:
+2026-05-23T14:24:41.8941553Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-05-23T14:24:41.8948270Z Initialized empty Git repository in /home/runner/work/hlme89/hlme89/.git/
+2026-05-23T14:24:41.8949874Z ##[debug]0
+2026-05-23T14:24:41.8951749Z ##[debug]Initialized empty Git repository in /home/runner/work/hlme89/hlme89/.git/
+2026-05-23T14:24:41.8952655Z ##[debug]
+2026-05-23T14:24:41.8954041Z [command]/usr/bin/git remote add origin https://github.com/hlme7788145-a11y/hlme89
+2026-05-23T14:24:41.8995209Z ##[debug]0
+2026-05-23T14:24:41.8996318Z ##[debug]
+2026-05-23T14:24:41.8997846Z ::endgroup::
+2026-05-23T14:24:41.8998270Z ##[endgroup]
+2026-05-23T14:24:41.8999527Z ::group::Disabling automatic garbage collection
+2026-05-23T14:24:41.9000304Z ##[group]Disabling automatic garbage collection
+2026-05-23T14:24:41.9002335Z [command]/usr/bin/git config --local gc.auto 0
+2026-05-23T14:24:41.9034687Z ##[debug]0
+2026-05-23T14:24:41.9035991Z ##[debug]
+2026-05-23T14:24:41.9037793Z ::endgroup::
+2026-05-23T14:24:41.9038417Z ##[endgroup]
+2026-05-23T14:24:41.9039689Z ::group::Setting up auth
+2026-05-23T14:24:41.9040226Z ##[group]Setting up auth
+2026-05-23T14:24:41.9044692Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-05-23T14:24:41.9074842Z ##[debug]1
+2026-05-23T14:24:41.9076094Z ##[debug]
+2026-05-23T14:24:41.9082386Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-05-23T14:24:41.9400247Z ##[debug]0
+2026-05-23T14:24:41.9401600Z ##[debug]
+2026-05-23T14:24:41.9408451Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-05-23T14:24:41.9436096Z ##[debug]1
+2026-05-23T14:24:41.9437078Z ##[debug]
+2026-05-23T14:24:41.9441861Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-05-23T14:24:41.9677143Z ##[debug]0
+2026-05-23T14:24:41.9678722Z ##[debug]
+2026-05-23T14:24:41.9686496Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-05-23T14:24:41.9720217Z ##[debug]1
+2026-05-23T14:24:41.9721461Z ##[debug]
+2026-05-23T14:24:41.9726528Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-05-23T14:24:41.9968346Z ##[debug]0
+2026-05-23T14:24:41.9969461Z ##[debug]
+2026-05-23T14:24:41.9977328Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-05-23T14:24:42.0006156Z ##[debug]0
+2026-05-23T14:24:42.0008219Z ##[debug]
+2026-05-23T14:24:42.0017142Z ::endgroup::
+2026-05-23T14:24:42.0017870Z ##[endgroup]
+2026-05-23T14:24:42.0019397Z ::group::Fetching the repository
+2026-05-23T14:24:42.0019961Z ##[group]Fetching the repository
+2026-05-23T14:24:42.0026998Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +dea3b1759694734d2050d76b8ebfbd7c410992e4:refs/remotes/origin/main
+2026-05-23T14:24:42.3448449Z From https://github.com/hlme7788145-a11y/hlme89
+2026-05-23T14:24:42.3450054Z  * [new ref]         dea3b1759694734d2050d76b8ebfbd7c410992e4 -> origin/main
+2026-05-23T14:24:42.3480257Z ##[debug]0
+2026-05-23T14:24:42.3481644Z ##[debug]
+2026-05-23T14:24:42.3483171Z ::endgroup::
+2026-05-23T14:24:42.3483867Z ##[endgroup]
+2026-05-23T14:24:42.3485183Z ::group::Determining the checkout info
+2026-05-23T14:24:42.3485772Z ##[group]Determining the checkout info
+2026-05-23T14:24:42.3487331Z ::endgroup::
+2026-05-23T14:24:42.3487932Z ##[endgroup]
+2026-05-23T14:24:42.3491003Z [command]/usr/bin/git sparse-checkout disable
+2026-05-23T14:24:42.3531409Z ##[debug]0
+2026-05-23T14:24:42.3532675Z ##[debug]
+2026-05-23T14:24:42.3538788Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-05-23T14:24:42.3565251Z ##[debug]0
+2026-05-23T14:24:42.3566552Z ##[debug]
+2026-05-23T14:24:42.3569005Z ::group::Checking out the ref
+2026-05-23T14:24:42.3569560Z ##[group]Checking out the ref
+2026-05-23T14:24:42.3573630Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-05-23T14:24:42.3619864Z Switched to a new branch 'main'
+2026-05-23T14:24:42.3623625Z branch 'main' set up to track 'origin/main'.
+2026-05-23T14:24:42.3629451Z ##[debug]0
+2026-05-23T14:24:42.3630777Z ##[debug]branch 'main' set up to track 'origin/main'.
+2026-05-23T14:24:42.3631467Z ##[debug]
+2026-05-23T14:24:42.3634366Z ::endgroup::
+2026-05-23T14:24:42.3634772Z ##[endgroup]
+2026-05-23T14:24:42.3818454Z ##[debug]0
+2026-05-23T14:24:42.3820305Z ##[debug]commit dea3b1759694734d2050d76b8ebfbd7c410992e4
+2026-05-23T14:24:42.3821188Z ##[debug]Author: hlme7788145-a11y <285200070+hlme7788145-a11y@users.noreply.github.com>
+2026-05-23T14:24:42.3821893Z ##[debug]Date:   Sat May 23 01:58:08 2026 +0300
+2026-05-23T14:24:42.3822616Z ##[debug]
+2026-05-23T14:24:42.3822960Z ##[debug]    Create aws.yml
+2026-05-23T14:24:42.3823484Z ##[debug]
+2026-05-23T14:24:42.3826580Z [command]/usr/bin/git log -1 --format=%H
+2026-05-23T14:24:42.3827906Z dea3b1759694734d2050d76b8ebfbd7c410992e4
+2026-05-23T14:24:42.3900680Z ##[debug]0
+2026-05-23T14:24:42.3903969Z ##[debug]dea3b1759694734d2050d76b8ebfbd7c410992e4
+2026-05-23T14:24:42.3904405Z ##[debug]
+2026-05-23T14:24:42.3904967Z ##[debug]Unsetting HOME override
+2026-05-23T14:24:42.3908060Z ::remove-matcher owner=checkout-git::
+2026-05-23T14:24:42.3920362Z ##[debug]Removed matchers: 'checkout-git'
+2026-05-23T14:24:42.3927419Z ##[debug]Node Action run completed with exit code 0
+2026-05-23T14:24:42.3961116Z ##[debug]Save intra-action state isPost = true
+2026-05-23T14:24:42.3961849Z ##[debug]Save intra-action state setSafeDirectory = true
+2026-05-23T14:24:42.3962326Z ##[debug]Save intra-action state repositoryPath = /home/runner/work/hlme89/hlme89
+2026-05-23T14:24:42.3965827Z ##[debug]Set output commit = dea3b1759694734d2050d76b8ebfbd7c410992e4
+2026-05-23T14:24:42.3966583Z ##[debug]Set output ref = refs/heads/main
+2026-05-23T14:24:42.3972221Z ##[debug]Finishing: Checkout
