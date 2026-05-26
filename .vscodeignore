@@ -1,0 +1,13 @@
+.github/**
+.gitignore
+.prettierignore
+.vscode-test/**
+.vscode/**
+.yarnrc
+**/.eslintrc.json
+**/*.map
+**/*.ts
+**/test/*
+**/tsconfig.json
+node_modules
+
