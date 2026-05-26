@@ -1,0 +1,10 @@
+{
+	"language": "Solidity",
+	"settings": {
+		"evmVersion": "Default",
+		"optimizer": {
+			"enabled": "0",
+			"runs": 0
+		}
+	}
+}
