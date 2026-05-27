@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build-test-verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Record start time
+        id: record_time
+        run: |
+          echo "BUILD_START=$(date +%s)" >> $GITHUB_ENV
+
+      - name: Checkout repository
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        id: setup_node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Cache node modules
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        id: install_deps
+        run: npm install
+
+      - name: Run tests
+        id: test
+        run: npm test
+
+      - name: Package and Verify VSCode Theme
+        id: package
+        run: npx vsce package
+
+      - name: Post PR Comment with Build Time and Test Success
+        if: github.event_name == 'pull_request'
+        id: post_comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // Get the start time from the environment variable
+            const buildStart = parseInt(process.env.BUILD_START);
+            const buildEnd = Math.floor(Date.now() / 1000);
+            const buildDuration = buildEnd - buildStart;
+            const commentBody = `✅ Build succeeded in ${buildDuration} seconds. All tests passed.`;
+            // Extract PR number from the GITHUB_REF (e.g. refs/pull/123/merge)
+            const prNumberMatch = process.env.GITHUB_REF.match(/refs\/pull\/(\d+)\/merge/);
+            if (prNumberMatch) {
+              const prNumber = parseInt(prNumberMatch[1], 10);
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: commentBody
+              });
+            } else {
+              console.log("Not a pull request event. No comment posted.");
+            }
