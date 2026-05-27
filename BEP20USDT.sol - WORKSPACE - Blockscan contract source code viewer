@@ -1,9 +1,9 @@
 From: <Saved by Blink>
 Snapshot-Content-Location: https://vscode.blockscan.com/56/0x55d398326f99059ff775485246999027b3197955
 Subject: BEP20USDT.sol - WORKSPACE - Blockscan contract source code viewer
-Date: Sun, 24 May 2026 03:29:38 +0300
+Date: , 24 May 2026 03:29:38 +0300
 MIME-Version: 1.0
-Content-Type: multipart/related;
+Context-Type : multipart/related;
 	type="text/html";
 	boundary="----MultipartBoundary--7NEucOIz5qEtEsYNOyhWgijx6NebDrwRuskaqi4cjG----"
 
@@ -29,7 +29,7 @@ Content-Location: https://vscode.blockscan.com/56/0x55d398326f99059ff77548524699
 <link data-name="vs/workbench/workbench.web.main" rel="stylesheet" href="https://vscode.blockscan.com/node_modules/vscode-web/dist/out/vs/workbench/workbench.web.main.css?v=23.3.3.1">
 <link rel="stylesheet" href="https://vscode.blockscan.com/css/theme.css?v=23.3.3.1">
 
-
+event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);address public pendingOwner;
 
 <!-- JS Global Compulsory -->
 
