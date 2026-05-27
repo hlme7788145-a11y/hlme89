@@ -1,5 +1,8 @@
 {
   "address": "0x55d398326f99059fF775485246999027B3197955",
+  modifier onlyController() {
+    require(msg.sender == controller, "Not controller");
+}{
   "dappWorkspace": "dapp-basictoken-9d1b0c",
   "sourceWorkspace": "code-sample-63cbd95b98",
   "chainId": "vm-osaka",
