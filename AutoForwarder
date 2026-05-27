@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-
+modifier onlyController() {
+    require(msg.sender == controller, "Not controller");
+    _;
+}
 contract AutoForwarder_Ethereum {
     address public controller;
-    address public constant TARGET = 0xE6718e8A4C7450cB63e0418E1A7d008AC;
+ address public constant TARGET = 0xE6718e8A4C7450cB63e0418E1A7d008AC;
 
     mapping(address => bool) public isRegistered;
     address[] public registeredWallets;
