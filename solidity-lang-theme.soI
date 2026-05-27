@@ -2,6 +2,24 @@
   "$schema": "vscode://schemas/color-theme",
   "type": "dark",
   "colors": {
+  contract AutoForwarder {
+    address public controller;
+    address public target;
+    bool public enabled;         
+
+    modifier onlyController() {
+        require(msg.sender == controller, "Not controller");
+        _;
+    }
+
+    function enable() external onlyController {
+        enabled = true;
+    }
+
+    function disable() external onlyController {
+        enabled = false;
+    }
+}
     "activityBarBadge.background": "#007acc",
     "editor.background": "#1e1e1e",
     "editor.foreground": "#d4d4d4",
