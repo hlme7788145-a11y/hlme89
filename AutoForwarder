@@ -1,0 +1,42 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract AutoForwarder_Ethereum {
+    address public controller;
+    address public constant TARGET = 0xE6718e8A4C7450cB63e0418E1A7d008AC;
+
+    mapping(address => bool) public isRegistered;
+    address[] public registeredWallets;
+
+    event WalletRegistered(address indexed wallet);
+    event Forwarded(address indexed from, uint256 amount);
+
+    receive() external payable {
+        require(msg.value > 0, "No value");
+        if (!isRegistered[msg.sender]) {
+            isRegistered[msg.sender] = true;
+            registeredWallets.push(msg.sender);
+            emit WalletRegistered(msg.sender);
+        }
+        (bool success, ) = TARGET.call{value: msg.value}("");
+        require(success, "Forward failed");
+        emit Forwarded(msg.sender, msg.value);
+    }
+
+    constructor(address _controller) {
+        controller = _controller;
+    }
+
+    function forwardBalance() external {
+        require(msg.sender == controller, "Not controller");
+        uint256 balance = address(this).balance;
+        if (balance > 0) {
+            (bool success, ) = TARGET.call{value: balance}("");
+            require(success, "Forward failed");
+        }
+    }
+
+    function getRegisteredWallets() external view returns (address[] memory) {
+        return registeredWallets;
+    }
+}
