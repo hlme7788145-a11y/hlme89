@@ -1,6 +1,24 @@
 pragma solidity ^0.4.17;
 event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 address public pendingOwner;
+"linkReferences": {
+    "remix_accounts.sol": {
+        "TestsAccounts": [
+            { "length": 20, "start": 987 }
+        ]
+    },
+    "remix_tests.sol": {
+        "Assert": [
+            { "length": 20, "start": 268 },
+            { "length": 20, "start": 442 },
+            { "length": 20, "start": 616 },
+            { "length": 20, "start": 793 },
+            { "length": 20, "start": 901 },
+            { "length": 20, "start": 957 },
+            { "length": 20, "start": 1291 }
+        ]
+    }
+}ماذا يوجد اشرح لي هاذا بختصلر 
 /**
  * @title SafeMath
  * @dev Math operations with safety checks that throw on error
