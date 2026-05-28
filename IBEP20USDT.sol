@@ -1,6 +1,7 @@
 pragma solidity 0.5.16;
 
 interface IBEP20 {
+aevent OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 address public pendingOwner;
 "linkReferences": {
     "remix_accounts.sol": {
@@ -19,7 +20,7 @@ address public pendingOwner;
             { "length": 20, "start": 1291 }
         ]
     }
-}ماذا يوجد اشرح لي هاذا بختصلر 
+}
   /**
    * @dev Returns the amount of tokens in existence.
    */
