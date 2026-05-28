@@ -18,7 +18,7 @@ address public pendingOwner;
             { "length": 20, "start": 1291 }
         ]
     }
-}ماذا يوجد اشرح لي هاذا بختصلر 
+} 
 /**
  * @title SafeMath
  * @dev Math operations with safety checks that throw on error
