@@ -1,4 +1,4 @@
-pragma solidity ^0.5.17;
+pragma solidity ^0.4.17;
 event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 address public pendingOwner;
 /**
