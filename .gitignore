@@ -15,3 +15,5 @@ cache
 solidity-lang-*.zip
 *.vsix
 dist/*.vsix
+
+.env
