@@ -1,0 +1,6 @@
+VITE_ALGOLIA_APPLICATION_ID=67UPJETB9C
+VITE_ALGOLIA_SEARCH_API_KEY=cac40ad2b5394b5da304ef7f182fab5e
+
+# Only needed to run `npm run index:products`.
+# Never expose this key in client code or commit it.
+ALGOLIA_WRITE_API_KEY=dc917d2b9a5a8981f389bfe3304ab595
