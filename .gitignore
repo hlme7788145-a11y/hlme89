@@ -1,19 +1,7 @@
-*.vsce
-node_modules
-*.vsix
-.DS_Store
-node_modules
-*.tar.gz
-*.tgz
-*.zip
-*.tar
-build/
-cache
-.cache/
-*.log
-*-error.
-solidity-lang-*.zip
-*.vsix
-dist/*.vsix
+# Ignore local env file containing secrets
+env
 
-.env
+# Node modules and logs (common)
+node_modules/
+logs/
+*.log
