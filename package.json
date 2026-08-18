@@ -3,7 +3,7 @@
   "displayName": "Solidity+Yul Semantic Syntax",
   "description": "Solidity & Yul Semantic syntax Highlighting amd Language Support",
   "publisher": "ContractShark",
-  "icon": "assets/icon.png",
+  "icon": "icon.png",
   "license": "MIT",
   "version": "2.0.0",
   "engines": {
