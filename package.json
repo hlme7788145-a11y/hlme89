@@ -44,7 +44,8 @@
     "ci": "npm i -g @vscode/vsce && npm run build",
     "build": "npx vsce package -o dist/",
     "test": " npx vscode-tmgrammar-test -g syntaxes/solidity.tmLanguage.json tests/solidity.syntax-test.sol",
-    "test:grammar": "node --loader ts-node/esm tests/tmgrammar.test.ts"
+    "test:grammar": "node --loader ts-node/esm tests/tmgrammar.test.ts",
+    "print:basic-token": "node scripts/print_basic_token.js"
   },
   "bugs": {
     "url": "https://github.com/contractshark/scode-extenstion/issues"
@@ -125,7 +126,7 @@
     ]
   },
   "devDependencies": {
-    "@types/node": "^20.17.19",
+    "@types-node": "^20.17.19",
     "@vscode/test-web": "^0.0.81",
     "@vscode/vsce": "^3.2.2",
     "ajv": "8.11.2",
