@@ -1,0 +1,7 @@
+import EnclaveAPI, { WalletTypes } from 'enclave/client';
+EnclaveAPI.getChainCode({
+  walletType: WalletTypes.LEDGER,
+  dpath: "m/44'/60'/0'/0"
+}).then(({ publicKey, chainCode }) => {
+  // ...
+});
