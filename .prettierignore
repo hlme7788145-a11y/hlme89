@@ -1,9 +1,3 @@
-build/
-dist/
-*.css
-*.html
-*.xml
-*.tmLanguage.json
-*.solidity.json
-*.abi.json
-
+common/translations
+package.json
+__snapshots__
