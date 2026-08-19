@@ -1,67 +1,173 @@
 @import 'common/sass/variables';
+@import 'common/sass/mixins';
 
-.TokenBalances {
-  &-title {
-    margin-top: 0;
+$footer-link-color: color(text-color-inverted);
+
+.Footer {
+  background-color: color(footer-bg);
+  padding: $space-sm $space-sm 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-top: 3px solid color(footer-border);
+
+  &-section {
+    color: color(text-color-inverted);
+    padding: $space;
   }
 
-  &-help {
-    font-size: $font-size-small;
-    margin-bottom: 15px;
+  // Responsive ordering behavior
+  &-links {
+    order: 1;
+    text-align: left;
   }
-
-  &-scan {
-    margin-top: 10px;
-  }
-
-  &-none {
+  &-about {
+    order: 2;
     text-align: center;
-    margin-bottom: -5px;
+  }
+  &-support {
+    order: 3;
+    text-align: right;
   }
 
-  &-loader {
-    padding: 25px 0;
-    text-align: center;
-  }
-
-  &-rows {
-    width: 100%;
-    margin-bottom: $space;
-  }
-
-  &-form {
-    margin-top: $space;
-  }
-
-  &-error {
-    color: color(brand-danger);
-    text-align: center;
-
-    &-message {
-      margin-top: 0;
-    }
-
-    .fa {
-      margin-left: $space-md;
-    }
-  }
-
-  &-buttons {
-    display: flex;
-    flex-wrap: wrap;
+  @media (max-width: 75rem) {
     justify-content: center;
-    margin: 0 #{-$space-xs} #{-$space-xs};
 
-    &-btn {
-      flex-grow: 1;
-      margin: 0 $space-xs $space-xs;
-    }
-
-    &-help {
-      padding-top: 10px;
+    &-links {
       text-align: center;
-      font-size: $font-size-xs;
-      color: shade-dark(0.7);
+      order: 2;
     }
+    &-about {
+      order: 1;
+      width: 100%;
+      padding-bottom: $space * 2;
+      margin-bottom: $space * 2;
+      border-bottom: 1px solid color(gray-dark);
+    }
+    &-support {
+      text-align: center;
+      order: 3;
+    }
+  }
+
+
+  &-links {
+    &-social {
+      margin-bottom: $space;
+      margin-left: -$space-xs;
+    }
+
+    &-links {
+      a {
+        display: block;
+        font-size: $font-size-small;
+        color: $footer-link-color;
+        margin-bottom: $space-md;
+      }
+    }
+  }
+
+
+  &-about {
+    &-logo {
+      display: block;
+      width: 100%;
+      max-width: 245px;
+      margin: -$space-xs auto $space * 1.25;
+      text-align: center;
+    }
+
+    &-links {
+      margin-bottom: $space;
+
+      > a {
+        margin: 0 $space-md;
+        color: $footer-link-color;
+        font-size: $font-size-bump;
+      }
+    }
+
+    &-text {
+      font-size: $font-size-xs;
+      opacity: 0.8;
+      margin: 0 auto $space;
+      max-width: 530px;
+    }
+
+    &-legal {
+      font-size: $font-size-xs-bump;
+      margin-bottom: $space-md;
+
+      &-text {
+        display: inline-block;
+        margin: 0 $space-sm;
+
+        > a {
+          color: $footer-link-color;
+        }
+      }
+    }
+  }
+
+
+  &-support {
+    &-title {
+      margin: 0 0 $space-sm;
+      font-size: $font-size-base;
+    }
+
+    &-affiliates {
+      margin-bottom: $space-sm;
+
+      > a {
+        display: block;
+        font-size: $font-size-xs-bump;
+        margin-bottom: $space-xs;
+        color: $footer-link-color;
+      }
+    }
+
+    &-donate {
+      margin-bottom: $space-sm;
+
+      &-address {
+        font-size: 0.7rem;
+        opacity: 0.8;
+      }
+    }
+
+    &-friends {
+      > a {
+        display: inline-block;
+        font-size: $font-size-xs;
+        color: $footer-link-color;
+
+        &:after {
+          content: '·';
+          margin: 0 $space-sm;
+        }
+
+        &:last-child:after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.SocialMediaLink {
+  transition: opacity 0.3s;
+  color: $footer-link-color;
+  margin: 0.55rem;
+
+  > i {
+    font-size: 1.15rem;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
+    color: $footer-link-color;
   }
 }
