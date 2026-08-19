@@ -1,0 +1,15 @@
+{
+  "name": "my-crypto-wallet",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "@ledgerhq/hw-app-eth": "^6.35.0",
+    "@ledgerhq/hw-transport-node-hid": "^6.29.0"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0"
+  }
+}
