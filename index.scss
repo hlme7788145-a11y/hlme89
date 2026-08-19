@@ -1,91 +1,154 @@
-// Use px and don't use variables here, we want the wallet to look
-// consistent regardless of theme or screen size.
+@import 'common/sass/variables';
+@import 'common/sass/mixins';
 
-$wallet-width: 680px;
-$wallet-height: 280px;
+$m-background: color(pane-bg);
+$m-window-padding-w: 20px;
+$m-window-padding-h: 30px;
+$m-window-padding-w-mobile: 10px;
+$m-window-padding-h-mobile: 10px;
+$m-header-height: 62px;
+$m-header-padding: 1rem 2rem 0.5rem 2rem;
+$m-content-padding: 1.5rem 2rem;
+$m-footer-padding: 0.5rem 2rem 1rem 2rem;
+$m-close-size: 26px;
+$m-anim-speed: 400ms;
 
-.PaperWallet {
-  position: relative;
-  margin: 0 auto;
-  width: $wallet-width;
-  height: $wallet-height;
-  border: 1px solid #163151;
-  user-select: none;
-  cursor: default;
-  background: #FFF;
-  color: #333;
+.Modal {
+  position: fixed;
+  top: $m-window-padding-h;
+  left: 50%;
+  width: initial;
+  max-width: 95%;
+  max-width: calc(100% - #{$m-window-padding-w * 2});
+  max-height: 95%;
+  max-height: calc(100% - #{$m-window-padding-h * 2});
+  background: $m-background;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  z-index: $zindex-modal;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modal-open $m-anim-speed ease 1;
+  text-align: left;
+  box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 30px 5px rgba(0, 0, 0, 0.12);
 
-  &-sidebar {
-    float: left;
-    height: 100%;
-    width: auto;
+  &-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(#000, 0.54);
+    z-index: $zindex-modal-background;
+    display: block;
   }
 
-  &-block {
-    position: relative;
-    float: left;
-    width: 27.5%;
-    padding: 20px;
+  &-fade {
+    background: linear-gradient(to bottom, transparent, $m-background);
+    position: fixed;
+    height: 25px;
+    width: calc(100% - 3rem);
+    bottom: 4.5rem;
+    left: 50%;
+    transform: translateX(-50%);
 
-    &-box {
-      width: 150px;
-      height: 150px;
-
-      &.is-shaded {
-        background: rgba(#000, 0.02);
-      }
+    &.has-no-footer {
+      bottom: 0;
     }
+  }
 
-    &-text {
-      position: absolute;
-      top: 50%;
-      left: 100%;
-      width: 100%;
+  &-header {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: $m-header-padding;
+    align-items: center;
+
+    &-title {
+      font-size: 1.625rem;
+      font-weight: 400;
       margin: 0;
-      transform: translate(-50%, -50%) rotate(-90deg);
-      font-size: 13px;
-      font-weight: 600;
-      color: #0b7290;
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: 0;
     }
-  }
 
-  &-info {
-    float: left;
-    width: 85%;
-    padding: 0 20px;
+    &-close {
+      @include reset-button;
+      height: $m-close-size;
+      width: $m-close-size;
+      opacity: 0.3;
+      transition: opacity 120ms;
 
-    &-text {
-      margin: 0 0 5px;
-      text-align: left;
-      font-size: 14px;
-      font-family: 'Roboto Mono', 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
-      font-weight: 300;
+      @include theme(dark) {
+        filter: invert(1);
+      }
 
-      &-label {
-        font-weight: 600;
+      &:hover {
+        opacity: 0.87;
+      }
+
+      &-icon {
+        width: 100%;
       }
     }
   }
 
-  &-identicon {
-    position: absolute;
-    right: 15px;
-    bottom: 45px;
-
-    &-left {
-      float: left;
+  &-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: $m-content-padding;
+    overflow: auto;
+    > .Spinner {
+      margin: 2.5rem auto;
     }
+  }
 
-    &-text {
-      float: left;
-      width: 130px;
-      padding: 0 5px;
-      margin: 12px 0 0;
-      font-size: 9px;
-      text-align: center;
+  &-footer {
+    padding: $m-footer-padding;
+    background: $m-background;
+
+    // Selector needs a little extra oomph to override bootstrap
+    &-btn.btn {
+      float: right;
+      margin: 0 0 0 8px;
+      min-width: 100px;
+    }
+  }
+
+  // Mobile styles
+  @media (max-width: $screen-sm) {
+    top: 100px;
+    width: calc(100% - #{$m-window-padding-w-mobile}) !important;
+    max-width: calc(100% - #{$m-window-padding-w-mobile * 2});
+    max-height: calc(100% - #{$m-window-padding-h-mobile * 2});
+  }
+}
+
+.animate-modal {
+  &-enter,
+  &-exit {
+    position: relative;
+    z-index: 3;
+    transition: opacity 300ms;
+  }
+
+  &-enter {
+    opacity: 0;
+
+    &-active {
+      opacity: 1;
+    }
+  }
+
+  &-exit {
+    opacity: 1;
+
+    &-active {
+      opacity: 0;
     }
   }
 }

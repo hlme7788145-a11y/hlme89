@@ -1,61 +1,109 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { createPortal } from 'react-dom';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-import closeIcon from 'assets/images/close.svg';
-import './Survey.scss';
+import ModalBody from './ModalBody';
+import './index.scss';
 
-interface State {
-  displaySurvey: boolean;
+export interface IButton {
+  text: string | React.ReactElement<string>;
+  type?: 'default' | 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'link';
+  disabled?: boolean;
+  onClick?(): void;
+}
+interface Props {
+  isOpen?: boolean;
+  title?: React.ReactNode;
+  disableButtons?: boolean;
+  hideButtons?: boolean;
+  children: React.ReactNode;
+  buttons?: IButton[];
+  maxWidth?: number;
+  handleClose(): void;
+}
+interface ModalStyle {
+  width?: string;
+  maxWidth?: string;
 }
 
-const STORAGE_NAME = 'SurveyDismissed';
+const Fade = ({ ...props }: any) => (
+  <CSSTransition {...props} timeout={300} classNames="animate-modal" />
+);
 
-const Container = ({ children }: any) => <div className="SurveyContainer">{children}</div>;
+export default class Modal extends PureComponent<Props, {}> {
+  public modalParent: HTMLElement;
+  public modalBody: ModalBody;
 
-export default class Survey extends Component {
-  public state: State = {
-    displaySurvey: this.isSurveyPrompted()
-  };
+  public componentDidUpdate(prevProps: Props) {
+    if (prevProps.isOpen !== this.props.isOpen) {
+      document.body.classList.toggle('no-scroll', !!this.props.isOpen);
+    }
+  }
+
+  public componentDidMount() {
+    const modalEl = document.getElementById('ModalContainer');
+    if (modalEl) {
+      this.modalParent = document.createElement('div');
+      modalEl.appendChild(this.modalParent);
+    }
+  }
+
+  public componentWillUnmount() {
+    document.body.classList.remove('no-scroll');
+    const modalEl = document.getElementById('ModalContainer');
+    if (modalEl) {
+      modalEl.removeChild(this.modalParent);
+    }
+  }
 
   public render() {
-    if (this.state.displaySurvey) {
-      return (
-        <Container>
-          <span>
-            We're trying to learn more about how people use the MyCrypto Desktop App. Please check
-            out our short survey:{' '}
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdwg-UDXIOQVCQfzcXOaCazZXuAs2OVNjtRzJHdziCYHKH4dw/viewform">
-              https://docs.google.com/forms/d/e/1FAIpQLSdwg-UDXIOQVCQfzcXOaCazZXuAs2OVNjtRzJHdziCYHKH4dw/viewform
-            </a>
-          </span>
-          <button className="Modal-header-close" onClick={this.handleClose}>
-            <img className="Modal-header-close-icon" src={closeIcon} alt="Close" />
-          </button>
-        </Container>
-      );
+    const {
+      isOpen,
+      title,
+      children,
+      buttons,
+      disableButtons,
+      hideButtons,
+      handleClose,
+      maxWidth
+    } = this.props;
+    const hasButtons = buttons && buttons.length;
+    const modalStyle: ModalStyle = {};
+
+    if (maxWidth) {
+      modalStyle.width = '100%';
+      modalStyle.maxWidth = `${maxWidth}px`;
     }
 
-    return null;
-  }
+    const modalBodyProps = {
+      title,
+      children,
+      modalStyle,
+      hasButtons,
+      buttons,
+      disableButtons,
+      hideButtons,
+      handleClose
+    };
 
-  public componentWillMount() {
-    this.setState({ displaySurvey: this.isSurveyPrompted() });
-  }
-
-  private isSurveyPrompted() {
-    if (sessionStorage.getItem(STORAGE_NAME) !== null) {
-      return false;
-    }
-    return true;
-  }
-
-  private handleClose = () => {
-    this.setState({ displaySurvey: false });
-    sessionStorage.setItem(
-      STORAGE_NAME,
-      JSON.stringify({
-        dismissed: true,
-        ts: Math.floor(Date.now() / 1000)
-      })
+    const modal = (
+      <TransitionGroup>
+        {isOpen && (
+          // Trap focus in modal by focusing the first element after the animation is complete
+          <Fade onEntered={() => this.modalBody.firstTabStop.focus()}>
+            <div>
+              <div className="Modal-overlay" onClick={handleClose} />
+              <ModalBody {...modalBodyProps} ref={div => (this.modalBody = div as ModalBody)} />
+            </div>
+          </Fade>
+        )}
+      </TransitionGroup>
     );
-  };
+
+    if (this.modalParent) {
+      return createPortal(modal, this.modalParent);
+    } else {
+      return modal;
+    }
+  }
 }
