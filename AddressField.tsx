@@ -1,76 +1,88 @@
 import React from 'react';
-import { Result } from 'mycrypto-nano-result';
-
-import { translateRaw } from 'translations';
-import { getIsValidAddressFunction } from 'libs/validators';
-import { Input } from 'components/ui';
-import { IGenerateAddressLookup } from './AddCustomTokenForm';
 import { connect } from 'react-redux';
-import { AppState } from '../../../../features/reducers';
-import { configSelectors } from '../../../../features/config';
-import { NetworkConfig } from 'types/network';
+
+import { donationAddressMap } from 'config';
+import translate from 'translations';
+import { AppState } from 'features/reducers';
+import { configSelectors } from 'features/config';
+import { Input } from 'components/ui';
+import { AddressFieldFactory } from './AddressFieldFactory';
 
 interface OwnProps {
-  addressLookup: IGenerateAddressLookup;
-  onChange(address: Result<string>): void;
+  isReadOnly?: boolean;
+  isSelfAddress?: boolean;
+  isCheckSummed?: boolean;
+  showLabelMatch?: boolean;
+  showIdenticon?: boolean;
+  showInputLabel?: boolean;
+  showEnsResolution?: boolean;
+  placeholder?: string;
+  value?: string;
+  dropdownThreshold?: number;
+  onChangeOverride?(ev: React.FormEvent<HTMLInputElement>): void;
 }
 
 interface StateProps {
-  network: NetworkConfig;
+  toChecksumAddress: ReturnType<typeof configSelectors.getChecksumAddressFn>;
 }
 
-enum ErrType {
-  INVALIDADDR = 'Not a valid address',
-  ADDRTAKEN = 'A token with this address already exists'
-}
+type Props = OwnProps & StateProps;
 
-interface State {
-  address: Result<string>;
-  userInput: string;
-}
-
-class AddressField extends React.Component<OwnProps & StateProps, State> {
-  public state: State = {
-    address: Result.from({ res: '' }),
-    userInput: ''
-  };
-
-  public render() {
-    const { userInput, address } = this.state;
-
-    return (
-      <label className="AddCustom-field form-group">
-        <div className="input-group-header">{translateRaw('TOKEN_ADDR')}</div>
-        <Input
-          isValid={address.ok()}
-          className="input-group-input-small"
-          type="text"
-          name="Address"
-          value={address.ok() ? address.unwrap() : userInput}
-          onChange={this.handleFieldChange}
-        />
-        {address.err() && <div className="AddCustom-field-error">{address.err()}</div>}
-      </label>
-    );
-  }
-
-  private handleFieldChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const userInput = e.currentTarget.value;
-    const addrTaken = this.props.addressLookup[userInput];
-
-    const validAddrFn = getIsValidAddressFunction(this.props.network.chainId);
-
-    const validAddr = validAddrFn(userInput);
-    const err = addrTaken ? ErrType.ADDRTAKEN : !validAddr ? ErrType.INVALIDADDR : undefined;
-    const address: Result<string> = err ? Result.from({ err }) : Result.from({ res: userInput });
-
-    this.setState({ userInput, address });
-    this.props.onChange(address);
-  };
-}
+const AddressField: React.SFC<Props> = ({
+  isReadOnly,
+  isSelfAddress,
+  isCheckSummed,
+  showLabelMatch,
+  toChecksumAddress,
+  showIdenticon,
+  placeholder = `donate.mycryptoid.eth or ${donationAddressMap.ETH}`,
+  showInputLabel = true,
+  onChangeOverride,
+  value,
+  dropdownThreshold,
+  showEnsResolution = true
+}) => (
+  <AddressFieldFactory
+    isSelfAddress={isSelfAddress}
+    showLabelMatch={showLabelMatch}
+    showIdenticon={showIdenticon}
+    showEnsResolution={showEnsResolution}
+    onChangeOverride={onChangeOverride}
+    value={value}
+    dropdownThreshold={dropdownThreshold}
+    withProps={({ currentTo, isValid, isLabelEntry, onChange, onFocus, onBlur, readOnly }) => (
+      <div className="input-group-wrapper">
+        <label className="input-group">
+          {showInputLabel && (
+            <div className="input-group-header">
+              {translate(isSelfAddress ? 'X_ADDRESS' : 'SEND_ADDR')}
+            </div>
+          )}
+          <Input
+            className={`input-group-input ${!isValid && !isLabelEntry ? 'invalid' : ''}`}
+            isValid={isValid}
+            type="text"
+            value={(value != null
+              ? value
+              : isCheckSummed
+              ? toChecksumAddress(currentTo.raw)
+              : currentTo.raw
+            ).trim()}
+            placeholder={placeholder}
+            readOnly={!!(isReadOnly || readOnly)}
+            spellCheck={false}
+            onChange={onChangeOverride || onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+          />
+        </label>
+      </div>
+    )}
+  />
+);
 
 export default connect(
   (state: AppState): StateProps => ({
-    network: configSelectors.getNetworkConfig(state)
+    toChecksumAddress: configSelectors.getChecksumAddressFn(state)
   })
 )(AddressField);
