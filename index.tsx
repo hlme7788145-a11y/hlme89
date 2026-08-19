@@ -1,59 +1,61 @@
-import React from 'react';
-import TabSection from 'containers/TabSection/index';
-import './index.scss';
+import React, { Component } from 'react';
 
-const COLORS = [
-  ['gray-base', 'gray-darker', 'gray-dark', 'gray', 'gray-light', 'gray-lighter', 'gray-lightest'],
-  [
-    'brand-primary-darker',
-    'brand-primary-dark',
-    'brand-primary',
-    'brand-primary-light',
-    'brand-primary-lighter'
-  ],
-  ['brand-info-darker', 'brand-info-dark', 'brand-info', 'brand-info-light', 'brand-info-lighter'],
-  [
-    'brand-success-darker',
-    'brand-success-dark',
-    'brand-success',
-    'brand-success-light',
-    'brand-success-lighter'
-  ],
-  [
-    'brand-warning-darker',
-    'brand-warning-dark',
-    'brand-warning',
-    'brand-warning-light',
-    'brand-warning-lighter'
-  ],
-  [
-    'brand-danger-darker',
-    'brand-danger-dark',
-    'brand-danger',
-    'brand-danger-light',
-    'brand-danger-lighter'
-  ],
-  ['text-color', 'text-inverted-color', 'link-color', 'link-hover-color'],
-  ['control-bg', 'control-color', 'control-border']
-];
+import closeIcon from 'assets/images/close.svg';
+import './Survey.scss';
 
-const Palette: React.SFC = () => (
-  <TabSection>
-    <section className="Tab-content">
-      <div className="Tab-content-pane Palette">
-        {COLORS.map(colors => (
-          <div className="Palette-group" key={colors[0]}>
-            {colors.map(c => (
-              <div className="Palette-group-color" key={c}>
-                <div className={`Palette-group-color-blob color--${c}`} />
-                <div className="Palette-group-color-name">{c}</div>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-    </section>
-  </TabSection>
-);
+interface State {
+  displaySurvey: boolean;
+}
 
-export default Palette;
+const STORAGE_NAME = 'SurveyDismissed';
+
+const Container = ({ children }: any) => <div className="SurveyContainer">{children}</div>;
+
+export default class Survey extends Component {
+  public state: State = {
+    displaySurvey: this.isSurveyPrompted()
+  };
+
+  public render() {
+    if (this.state.displaySurvey) {
+      return (
+        <Container>
+          <span>
+            We're trying to learn more about how people use the MyCrypto Desktop App. Please check
+            out our short survey:{' '}
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdwg-UDXIOQVCQfzcXOaCazZXuAs2OVNjtRzJHdziCYHKH4dw/viewform">
+              https://docs.google.com/forms/d/e/1FAIpQLSdwg-UDXIOQVCQfzcXOaCazZXuAs2OVNjtRzJHdziCYHKH4dw/viewform
+            </a>
+          </span>
+          <button className="Modal-header-close" onClick={this.handleClose}>
+            <img className="Modal-header-close-icon" src={closeIcon} alt="Close" />
+          </button>
+        </Container>
+      );
+    }
+
+    return null;
+  }
+
+  public componentWillMount() {
+    this.setState({ displaySurvey: this.isSurveyPrompted() });
+  }
+
+  private isSurveyPrompted() {
+    if (sessionStorage.getItem(STORAGE_NAME) !== null) {
+      return false;
+    }
+    return true;
+  }
+
+  private handleClose = () => {
+    this.setState({ displaySurvey: false });
+    sessionStorage.setItem(
+      STORAGE_NAME,
+      JSON.stringify({
+        dismissed: true,
+        ts: Math.floor(Date.now() / 1000)
+      })
+    );
+  };
+}
