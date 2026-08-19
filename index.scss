@@ -1,173 +1,170 @@
 @import 'common/sass/variables';
 @import 'common/sass/mixins';
 
-$footer-link-color: color(text-color-inverted);
+$small-size: 900px;
 
-.Footer {
-  background-color: color(footer-bg);
-  padding: $space-sm $space-sm 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  border-top: 3px solid color(footer-border);
-
-  &-section {
-    color: color(text-color-inverted);
-    padding: $space;
-  }
-
-  // Responsive ordering behavior
-  &-links {
-    order: 1;
-    text-align: left;
-  }
-  &-about {
-    order: 2;
-    text-align: center;
-  }
-  &-support {
-    order: 3;
-    text-align: right;
-  }
-
-  @media (max-width: 75rem) {
-    justify-content: center;
-
-    &-links {
-      text-align: center;
-      order: 2;
-    }
-    &-about {
-      order: 1;
-      width: 100%;
-      padding-bottom: $space * 2;
-      margin-bottom: $space * 2;
-      border-bottom: 1px solid color(gray-dark);
-    }
-    &-support {
-      text-align: center;
-      order: 3;
-    }
-  }
-
-
-  &-links {
-    &-social {
-      margin-bottom: $space;
-      margin-left: -$space-xs;
-    }
-
-    &-links {
-      a {
-        display: block;
-        font-size: $font-size-small;
-        color: $footer-link-color;
-        margin-bottom: $space-md;
-      }
-    }
-  }
-
-
-  &-about {
-    &-logo {
-      display: block;
-      width: 100%;
-      max-width: 245px;
-      margin: -$space-xs auto $space * 1.25;
-      text-align: center;
-    }
-
-    &-links {
-      margin-bottom: $space;
-
-      > a {
-        margin: 0 $space-md;
-        color: $footer-link-color;
-        font-size: $font-size-bump;
-      }
-    }
-
-    &-text {
-      font-size: $font-size-xs;
-      opacity: 0.8;
-      margin: 0 auto $space;
-      max-width: 530px;
-    }
-
-    &-legal {
-      font-size: $font-size-xs-bump;
-      margin-bottom: $space-md;
-
-      &-text {
-        display: inline-block;
-        margin: 0 $space-sm;
-
-        > a {
-          color: $footer-link-color;
-        }
-      }
-    }
-  }
-
-
-  &-support {
-    &-title {
-      margin: 0 0 $space-sm;
-      font-size: $font-size-base;
-    }
-
-    &-affiliates {
-      margin-bottom: $space-sm;
-
-      > a {
-        display: block;
-        font-size: $font-size-xs-bump;
-        margin-bottom: $space-xs;
-        color: $footer-link-color;
-      }
-    }
-
-    &-donate {
-      margin-bottom: $space-sm;
-
-      &-address {
-        font-size: 0.7rem;
-        opacity: 0.8;
-      }
-    }
-
-    &-friends {
-      > a {
-        display: inline-block;
-        font-size: $font-size-xs;
-        color: $footer-link-color;
-
-        &:after {
-          content: '·';
-          margin: 0 $space-sm;
-        }
-
-        &:last-child:after {
-          display: none;
-        }
-      }
-    }
+@mixin small-query {
+  @media screen and (max-width: $small-size) {
+    @content;
   }
 }
 
-.SocialMediaLink {
-  transition: opacity 0.3s;
-  color: $footer-link-color;
-  margin: 0.55rem;
+@mixin big-query {
+  @media screen and (min-width: $small-size + 1) {
+    @content;
+  }
+}
 
-  > i {
-    font-size: 1.15rem;
+@keyframes dropdown-is-flashing {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// Header
+.Header {
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: $screen-sm) {
+    margin-bottom: 1rem;
   }
 
-  &:hover,
-  &:focus {
-    opacity: 0.8;
-    color: $footer-link-color;
+  &-announcement {
+    padding: 4px 10px;
+    line-height: 26px;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 300;
+    color: #fff;
+    transition: background-color 80ms ease;
+    background: color(gray-darker);
+
+    @include theme(dark) {
+      background: color(gray-lighter);
+    }
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+      transition: none;
+
+      &:hover,
+      &:focus {
+        opacity: 0.7;
+      }
+    }
+
+    // Colors
+    &.is-primary {
+      background: color(brand-primary);
+    }
+
+    &.is-warning {
+      background: color(brand-warning);
+    }
+
+    &.is-danger {
+      background: color(brand-danger);
+    }
+
+    &.is-success {
+      background: color(brand-success);
+    }
+
+    &.is-info {
+      background: color(brand-info);
+      border-bottom: 1px solid rgba(#fff, 0.4);
+    }
+  }
+
+  &-branding {
+    color: white;
+    padding: 0;
+    background: #274e7e;
+    background-image: url('~assets/images/header-bg.jpg'), linear-gradient(130deg, #37709e, #274e7e);
+    background-size: cover;
+    background-position: left;
+
+    @include small-query {
+      text-align: center;
+      background-position: center;
+    }
+
+    &-inner {
+      display: flex;
+      align-items: center;
+      @include small-query {
+        flex-direction: column;
+        padding-left: $cont-padding;
+        padding-right: $cont-padding;
+      }
+    }
+
+    &-title {
+      @include big-query {
+        text-align: left;
+      }
+
+      &-logo {
+        height: 64px;
+        width: auto;
+        padding: 8px;
+        padding-right: 0;
+        filter: drop-shadow(0 1px 0 rgba(#000, 0.12)) drop-shadow(1px 1px 0 rgba(#000, 0.12));
+      }
+    }
+
+    &-right {
+      font-size: 18px;
+      font-weight: 300;
+      color: color(text-color-inverted);
+      flex: 1 auto;
+      text-align: right;
+      padding: 0 0 5px;
+
+      @include small-query {
+        text-align: center;
+      }
+
+      > * {
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: 5px;
+      }
+
+      &-version {
+        max-width: 395px;
+        margin-right: 10px;
+      }
+
+      &-online {
+        margin-right: 6px;
+      }
+
+      &-dropdown {
+        margin-left: 6px;
+
+        @media screen and (max-width: $screen-xs) {
+          .btn {
+            padding: 0.3rem 0.5rem;
+          }
+        }
+
+        &-add {
+          text-align: center;
+          padding-top: $space-sm !important;
+          padding-bottom: $space-sm !important;
+        }
+
+        &.is-flashing {
+          pointer-events: none;
+          animation: dropdown-is-flashing 800ms ease infinite;
+        }
+      }
+    }
   }
 }

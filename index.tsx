@@ -1,151 +1,185 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { MapStateToProps, connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
-import { translateRaw } from 'translations';
+import { ANNOUNCEMENT_MESSAGE, ANNOUNCEMENT_TYPE, languages } from 'config';
+import { NetworkConfig } from 'types/network';
+import { getKeyByValue } from 'utils/helpers';
 import logo from 'assets/images/logo-mycrypto.svg';
+import { OldDropDown } from 'components/ui';
 import {
-  donationAddressMap,
-  VERSION,
-  knowledgeBaseURL,
-  socialMediaLinks,
-  productLinks,
-  affiliateLinks,
-  partnerLinks
-} from 'config';
-import DisclaimerModal from 'components/DisclaimerModal';
-import { NewTabLink } from 'components/ui';
-import PreFooter from './PreFooter';
-import ThemeToggle from './ThemeToggle';
+  configSelectors,
+  configMetaSelectors,
+  configNodesCustomActions,
+  configMetaActions,
+  configNetworksCustomActions,
+  configNodesSelectedActions,
+  configNodesSelectedSelectors,
+  configNodesStaticSelectors,
+  configNodesCustomTypes
+} from 'features/config';
+import { AppState } from 'features/reducers';
+import { transactionFieldsActions } from 'features/transaction';
+import CustomNodeModal from 'components/CustomNodeModal';
+import NetworkDropdown from './components/NetworkDropdown';
+import Navigation from './components/Navigation';
+import OnlineStatus from './components/OnlineStatus';
 import './index.scss';
 
-const SocialMediaLink = ({ link, text }: { link: string; text: string }) => {
-  return (
-    <NewTabLink className="SocialMediaLink" key={link} href={link} aria-label={text}>
-      <i className={`sm-icon sm-logo-${text}`} />
-    </NewTabLink>
-  );
-};
+interface OwnProps {
+  networkParam: string | null;
+}
 
-interface Props {
-  latestBlock: string;
+interface DispatchProps {
+  changeLanguage: configMetaActions.TChangeLanguage;
+  changeNodeRequestedOneTime: configNodesSelectedActions.TChangeNodeRequestedOneTime;
+  setGasPriceField: transactionFieldsActions.TSetGasPriceField;
+  addCustomNode: configNodesCustomActions.TAddCustomNode;
+  removeCustomNode: configNodesCustomActions.TRemoveCustomNode;
+  addCustomNetwork: configNetworksCustomActions.TAddCustomNetwork;
+}
+
+interface StateProps {
+  shouldSetNodeFromQS: boolean;
+  network: NetworkConfig;
+  languageSelection: ReturnType<typeof configMetaSelectors.getLanguageSelection>;
+  isChangingNode: ReturnType<typeof configNodesSelectedSelectors.isNodeChanging>;
+  isOffline: ReturnType<typeof configMetaSelectors.getOffline>;
 }
 
 interface State {
-  isDisclaimerOpen: boolean;
+  isAddingCustomNode: boolean;
 }
 
-export default class Footer extends React.PureComponent<Props, State> {
-  public state: State = {
-    isDisclaimerOpen: false
+type Props = OwnProps & StateProps & DispatchProps;
+
+class Header extends Component<Props, State> {
+  public state = {
+    isAddingCustomNode: false
   };
 
+  public componentDidMount() {
+    this.attemptSetNodeFromQueryParameter();
+  }
+
   public render() {
+    const { languageSelection, isChangingNode, isOffline, network } = this.props;
+    const { isAddingCustomNode } = this.state;
+    const selectedLanguage = languageSelection;
+    const LanguageDropDown = OldDropDown as new () => OldDropDown<typeof selectedLanguage>;
+
     return (
-      <div>
-        <PreFooter openModal={this.toggleModal} />
-        <footer className="Footer" role="contentinfo" aria-label="footer">
-          <div className="Footer-links Footer-section">
-            <div className="Footer-links-social">
-              {socialMediaLinks.map((socialMediaItem, idx) => (
-                <SocialMediaLink
-                  link={socialMediaItem.link}
-                  key={idx}
-                  text={socialMediaItem.text}
-                />
-              ))}
-            </div>
-
-            <div className="Footer-links-links">
-              {productLinks.map(link => (
-                <NewTabLink key={link.link} href={link.link}>
-                  {link.text}
-                </NewTabLink>
-              ))}
-              <NewTabLink href="mailto:press@mycrypto.com">
-                {translateRaw('FOOTER_PRESS')}
-              </NewTabLink>
-            </div>
+      <div className="Header">
+        {ANNOUNCEMENT_MESSAGE && (
+          <div className={`Header-announcement is-${ANNOUNCEMENT_TYPE}`}>
+            {ANNOUNCEMENT_MESSAGE}
           </div>
+        )}
 
-          <div className="Footer-about Footer-section">
-            <NewTabLink className="Footer-about-logo" href="/">
+        <section className="Header-branding">
+          <section className="Header-branding-inner container">
+            <Link to="/" className="Header-branding-title" aria-label="Go to homepage">
               <img
-                className="Footer-about-logo-img"
+                className="Header-branding-title-logo"
                 src={logo}
-                height="55px"
-                width="auto"
+                height="64px"
+                width="245px"
                 alt="MyCrypto logo"
               />
-            </NewTabLink>
-
-            <div className="Footer-about-links">
-              <NewTabLink href="https://mycrypto.com">MyCrypto.com</NewTabLink>
-              <NewTabLink href={knowledgeBaseURL}>{translateRaw('FOOTER_SUPPORT')}</NewTabLink>
-              <NewTabLink href="https://about.mycrypto.com">
-                {translateRaw('FOOTER_TEAM')}
-              </NewTabLink>
-              <NewTabLink href="https://about.mycrypto.com/privacy/">
-                {translateRaw('FOOTER_PRIVACY_POLICY')}
-              </NewTabLink>
-            </div>
-
-            <p className="Footer-about-text">{translateRaw('FOOTER_ABOUT')}</p>
-
-            <div className="Footer-about-legal">
-              <div className="Footer-about-legal-text">
-                © {new Date().getFullYear()} MyCrypto, Inc.
+            </Link>
+            <div className="Header-branding-right">
+              <div className="Header-branding-right-online">
+                <OnlineStatus isOffline={isOffline} />
               </div>
-              <div className="Footer-about-legal-text">
-                <a onClick={this.toggleModal}>{translateRaw('DISCLAIMER')}</a>
+
+              <div className="Header-branding-right-dropdown">
+                <LanguageDropDown
+                  ariaLabel={`change language. current language ${languages[selectedLanguage]}`}
+                  options={Object.values(languages)}
+                  value={languages[selectedLanguage]}
+                  onChange={this.changeLanguage}
+                  size="smr"
+                  color="white"
+                />
               </div>
-              <div className="Footer-about-legal-text">v{VERSION}</div>
-            </div>
-
-            <div className="Footer-about-theme">
-              <ThemeToggle />
-            </div>
-          </div>
-
-          <div className="Footer-support Footer-section">
-            <h5 className="Footer-support-title">{translateRaw('FOOTER_AFFILIATE_TITLE')}</h5>
-            <div className="Footer-support-affiliates">
-              {affiliateLinks.map((link, i) => (
-                <NewTabLink key={i} href={link.link}>
-                  {link.text}
-                </NewTabLink>
-              ))}
-            </div>
-
-            <div className="Footer-support-donate">
-              <div className="Footer-support-donate-currency">
-                {translateRaw('DONATE_CURRENCY', { $currency: 'ETH' })}
+              <div
+                className={classnames({
+                  'Header-branding-right-dropdown': true,
+                  'is-flashing': isChangingNode
+                })}
+              >
+                <NetworkDropdown openCustomNodeModal={this.openCustomNodeModal} />
               </div>
-              <div className="Footer-support-donate-address">{donationAddressMap.ETH}</div>
             </div>
+          </section>
+        </section>
 
-            <div className="Footer-support-donate">
-              <div className="Footer-support-donate-currency">
-                {translateRaw('DONATE_CURRENCY', { $currency: 'BTC' })}
-              </div>
-              <div className="Footer-support-donate-address">{donationAddressMap.BTC}</div>
-            </div>
+        <Navigation
+          color={!network.isCustom && network.color}
+          unsupportedTabs={network.unsupportedTabs}
+        />
 
-            <div className="Footer-support-friends">
-              {partnerLinks.map((link, i) => (
-                <NewTabLink key={i} href={link.link}>
-                  {link.text}
-                </NewTabLink>
-              ))}
-            </div>
-          </div>
-        </footer>
-        <DisclaimerModal isOpen={this.state.isDisclaimerOpen} handleClose={this.toggleModal} />
+        <CustomNodeModal
+          isOpen={isAddingCustomNode}
+          addCustomNode={this.addCustomNode}
+          handleClose={this.closeCustomNodeModal}
+        />
       </div>
     );
   }
 
-  private toggleModal = () => {
-    this.setState(state => ({
-      isDisclaimerOpen: !state.isDisclaimerOpen
-    }));
+  public changeLanguage = (value: string) => {
+    const key = getKeyByValue(languages, value);
+    if (key) {
+      this.props.changeLanguage(key);
+    }
   };
+
+  private openCustomNodeModal = () => {
+    this.setState({ isAddingCustomNode: true });
+  };
+
+  private closeCustomNodeModal = () => {
+    this.setState({ isAddingCustomNode: false });
+  };
+
+  private addCustomNode = (payload: configNodesCustomTypes.AddCustomNodeAction['payload']) => {
+    this.setState({ isAddingCustomNode: false });
+    this.props.addCustomNode(payload);
+  };
+
+  private attemptSetNodeFromQueryParameter() {
+    const { shouldSetNodeFromQS, networkParam } = this.props;
+    if (shouldSetNodeFromQS) {
+      this.props.changeNodeRequestedOneTime(networkParam!);
+    }
+  }
 }
+
+const mapStateToProps: MapStateToProps<StateProps, OwnProps, AppState> = (
+  state,
+  { networkParam }
+): StateProps => ({
+  shouldSetNodeFromQS: !!(
+    networkParam && configNodesStaticSelectors.isStaticNodeId(state, networkParam)
+  ),
+  isOffline: configMetaSelectors.getOffline(state),
+  isChangingNode: configNodesSelectedSelectors.isNodeChanging(state),
+  languageSelection: configMetaSelectors.getLanguageSelection(state),
+  network: configSelectors.getNetworkConfig(state)
+});
+
+const mapDispatchToProps: DispatchProps = {
+  setGasPriceField: transactionFieldsActions.setGasPriceField,
+  changeLanguage: configMetaActions.changeLanguage,
+  changeNodeRequestedOneTime: configNodesSelectedActions.changeNodeRequestedOneTime,
+  addCustomNode: configNodesCustomActions.addCustomNode,
+  removeCustomNode: configNodesCustomActions.removeCustomNode,
+  addCustomNetwork: configNetworksCustomActions.addCustomNetwork
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);
