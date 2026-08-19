@@ -1,25 +1,6 @@
-FROM node:18-alpine
+FROM electronuserland/builder:wine-03.18
 
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm ci
-
-# Copy application code
-COPY . .
-
-# Build application (if needed)
-RUN npm run build 2>/dev/null || true
-
-# Expose port
-EXPOSE 3000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
-
-# Start application
-CMD ["npm", "start"]
+RUN mkdir /hostHome
+RUN apt-get update && apt-get install -y libusb-1.0 nasm graphicsmagick autoconf automake libtool python-pip
+RUN pip install awscli --upgrade --user
+ENV PATH "$PATH:/root/.local/bin"
