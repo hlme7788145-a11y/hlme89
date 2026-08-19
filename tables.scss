@@ -1,15 +1,10 @@
-@import 'common/sass/variables/colors';
+@import './colors';
 
-tr {
-  transition: background-color 120ms;
-}
-
-.table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: shade-dark(0.02);
-}
-
-.table-hover {
-  > tbody > tr:hover {
-    background-color: shade-dark(0.05);
-  }
-}
+$table-cell-padding: $space-sm;
+$table-condensed-cell-padding: $space-xs;
+$table-bg: transparent;
+$table-bg-accent: rgba(0, 0, 0, 0.03);
+$table-bg-hover: rgba(0, 0, 0, 0.06);
+$table-bg-active: $table-bg-hover;
+$table-border-color: transparent;
+$table-cell-padding: 0.75rem 1rem;
