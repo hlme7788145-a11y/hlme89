@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>My Crypto Wallet</title>
+</head>
+<body>
+
+    <button id="btn-connect">جلب بيانات Ledger (Enclave)</button>
+    <div id="result"></div>
+
+    <script type="module">
+        import EnclaveAPI, { WalletTypes } from 'enclave/client';
+
+        const btn = document.getElementById('btn-connect');
+        const resultDiv = document.getElementById('result');
+
+        btn.addEventListener('click', () => {
+            resultDiv.innerText = "جاري الاتصال بـ Ledger...";
+
+            EnclaveAPI.getChainCode({
+                walletType: WalletTypes.LEDGER,
+                dpath: "m/44'/60'/0'/0"
+            }).then(({ publicKey, chainCode }) => {
+                console.log("Public Key:", publicKey);
+                console.log("Chain Code:", chainCode);
+                resultDiv.innerText = `تم الجلب بنجاح!\nPublic Key: ${publicKey}`;
+            }).catch(error => {
+                console.error("خطأ:", error);
+                resultDiv.innerText = "فشل الاتصال: " + error.message;
+            });
+        });
+    </script>
+</body>
+</html>
